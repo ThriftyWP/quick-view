@@ -368,27 +368,26 @@ class wcqv_frontend{
 			
 	    }
 	}
+	// Add this to class.frontend.php
+	public function get_quick_view_button($product_id) {
+		if (!$product_id) {
+			return '';
+		}
+		
+		if ($this->wcqv_options['button_icon'] === '1') {
+			return sprintf(
+				'<a data-product-id="%d" class="quick_view_icon button"><span><img src="%simg/search.png" /></span></a>',
+				$product_id,
+				$this->wcqv_plugin_dir_url
+			);
+		} else {
+			return sprintf(
+				'<a data-product-id="%d" class="quick_view button"><span>%s</span></a>',
+				$product_id,
+				$this->wcqv_options['button_lable']
+			);
+		}
+	}
 	
-}
-
-// Add this to class.frontend.php
-public function get_quick_view_button($product_id) {
-    if (!$product_id) {
-        return '';
-    }
-    
-    if ($this->wcqv_options['button_icon'] === '1') {
-        return sprintf(
-            '<a data-product-id="%d" class="quick_view_icon button"><span><img src="%simg/search.png" /></span></a>',
-            $product_id,
-            $this->wcqv_plugin_dir_url
-        );
-    } else {
-        return sprintf(
-            '<a data-product-id="%d" class="quick_view button"><span>%s</span></a>',
-            $product_id,
-            $this->wcqv_options['button_lable']
-        );
-    }
 }
 ?>
