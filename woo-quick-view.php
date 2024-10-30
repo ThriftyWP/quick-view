@@ -55,9 +55,9 @@ function wcqv_quick_view_deactivate() {
 
 // Load WooCommerce-specific files and textdomain
 add_action('plugins_loaded', 'wqv_load_class_files');
+// Modify the existing wqv_load_class_files() function instead of creating a new one
 function wqv_load_class_files() {
     if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
-        
         require_once 'classes/class.frontend.php';
         require_once 'classes/class.backend.php';
 
@@ -68,13 +68,16 @@ function wqv_load_class_files() {
         $load_backend = new wcqv_backend($wcqv_plugin_dir_url);
         $enable_mobile = ($data['enable_mobile'] === '1') ? true : false;
 
+        // Store frontend instance globally
+        global $wcqv_frontend_instance;
+
         if ($load_backend->mobile_detect()) {
             if ($enable_mobile && ($data['enable_quick_view'] === '1')) {
-                $load_frontend = new wcqv_frontend($wcqv_plugin_dir_url);
+                $wcqv_frontend_instance = new wcqv_frontend($wcqv_plugin_dir_url);
             }
         } else {
             if ($data['enable_quick_view'] === '1') {
-                $load_frontend = new wcqv_frontend($wcqv_plugin_dir_url);
+                $wcqv_frontend_instance = new wcqv_frontend($wcqv_plugin_dir_url);
             }
         }
 
@@ -120,15 +123,3 @@ function wcqv_quick_view_shortcode($atts) {
     return $wcqv_frontend_instance->get_quick_view_button($product_id);
 }
 add_shortcode('quick_view', 'wcqv_quick_view_shortcode');
-
-// Add this to store the frontend instance globally
-function wqv_load_class_files() {
-    if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
-        // ... existing code ...
-        
-        global $wcqv_frontend_instance;
-        if ($data['enable_quick_view'] === '1') {
-            $wcqv_frontend_instance = new wcqv_frontend($wcqv_plugin_dir_url);
-        }
-    }
-}
