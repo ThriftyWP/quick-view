@@ -1,10 +1,10 @@
 <?php
 /*
 Plugin Name: Pro Woo Quick View
-Plugin URI: http://ciphercoin.com/
+Plugin URI: 
 Description: Woo Quick View plugin allows the customers to have a brief overview of every product in a light box.
-Author: Arshid
-Author URI: http://ciphercoin.com/
+Author: Jaroncito
+Author URI: 
 Text Domain: pro-woo-quick-view
 Version: 1.1.3
 */
